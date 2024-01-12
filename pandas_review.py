@@ -232,3 +232,27 @@ print(f'Total missing values in pokemon data is: {missing_values}')
 # Check that replacement of Type 2 nulls with Type 1 was accurate
 print(df.loc[df['Type 2'] == df['Type 1']])
 
+# Remove rows with nulls: recheck for nulls and count them
+df = pd.read_csv('modified_pokemon_data.csv')
+print(df.isna().sum())
+
+# Nulls are isolated to Type 2 column so lets look at them
+print(df[df['Type 2'].isna()])
+
+# Let's drop rows that have Type 2 null and save to a new dataframe
+df2 = df[~df['Type 2'].isna()]
+print(df2.head(20))
+
+# Double check that there are no nulls in new dataframe
+print(df2[df2.isna()].sum())
+
+print(df2.describe())
+
+# # Set printing options so we can see the whole table
+# pd.set_option('display.max_rows', None) 
+# pd.set_option('display.max_columns', None)
+
+# # Print grouped table
+# print(df.groupby(['Type 1', 'Type 2']).count())
+
+
