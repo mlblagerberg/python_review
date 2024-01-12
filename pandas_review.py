@@ -1,5 +1,5 @@
 """
-General Pandas review
+General Pandas Review
 January 10th, 2024
 Madeleine Lagerberg
 """
@@ -158,50 +158,77 @@ df.insert(10, 'Total', column_to_move)
 
 ### Aggregate Statistics (Groupby)
 
+# df = pd.read_csv('modified_pokemon_data.csv')
+# print(df.head(100))
+# # print(df.groupby(['Type 1']).mean())
+
+# # print(df.groupby(['Type 1']).describe())
+
+# # print(df.describe()) # works fine, not sure why mean() wouldn't just calculate for numeric columns automatically
+
+# df2 = df.drop(columns = ['Name', 'Type 2'])
+# print(df2)
+
+# print(df2.groupby(['Type 1']).mean().sort_values('Speed', ascending=False))
+
+# # Group by multiple fields
+# df3 = df.drop(columns = ['Name'])
+# df3_sorted = df3.groupby(['Type 1', 'Type 2']).mean().sort_values(['Type 1', 'Speed', 'Type 2'], ascending=[1,0,1])
+
+# df3_sorted.to_csv('sorted_fastest_pokemon_types.txt', sep='\t')
+# print(df3_sorted.head(20))
+
+# # other aggregate stats: sum and count
+# print(df.groupby(['Type 1']).count())
+
+
+# ### Working with large amounts of data
+# # use chunksize = (row count you want to consume) 
+# i = 1
+# for df in pd.read_csv('modified_pokemon_data.csv', chunksize=10): # df will be 10 rows of the total dataset
+#     print(f'Chunk  {i}')
+#     print(df)
+#     i += 1
+
+# # run operation over chunks and concatenate to new df
+# new_df = pd.DataFrame(columns=df.columns)
+
+# for df in pd.read_csv('modified_pokemon_data.csv', chunksize=100):
+#     results = df.groupby(['Type 1']).count()
+
+#     new_df = pd.concat([new_df, results])
+
+# print(new_df.sum())
+
+# print(new_df.columns)
+# print(new_df.head(20))
+
+# final_df = new_df.groupby(new_df.index).sum()
+# print(final_df)
+
+
+### Handling nulls or missing values
 df = pd.read_csv('modified_pokemon_data.csv')
-print(df.head(100))
-# print(df.groupby(['Type 1']).mean())
 
-# print(df.groupby(['Type 1']).describe())
+# Count missing values in dataframe
+missing_values = df.isna().sum()
+print(f'Total missing values in pokemon data is: {missing_values}')
 
-# print(df.describe()) # works fine, not sure why mean() wouldn't just calculate for numeric columns automatically
-
-df2 = df.drop(columns = ['Name', 'Type 2'])
-print(df2)
-
-print(df2.groupby(['Type 1']).mean().sort_values('Speed', ascending=False))
-
-# Group by multiple fields
-df3 = df.drop(columns = ['Name'])
-df3_sorted = df3.groupby(['Type 1', 'Type 2']).mean().sort_values(['Type 1', 'Speed', 'Type 2'], ascending=[1,0,1])
-
-df3_sorted.to_csv('sorted_fastest_pokemon_types.txt', sep='\t')
-print(df3_sorted.head(20))
-
-# other aggregate stats: sum and count
-print(df.groupby(['Type 1']).count())
+# Let's look at the rows with missing values in them
+print(df[df.isna().any(axis=1)])
 
 
-### Working with large amounts of data
-# use chunksize = (row count you want to consume) 
-i = 1
-for df in pd.read_csv('modified_pokemon_data.csv', chunksize=10): # df will be 10 rows of the total dataset
-    print(f'Chunk  {i}')
-    print(df)
-    i += 1
+# df['Type 2'].isna() == df['Type 1']
+# print(df[df.isna().any(axis=1)])
 
-# run operation over chunks and concatenate to new df
-new_df = pd.DataFrame(columns=df.columns)
+# Replae the null values with Type 1 for that pokemon
+df.loc[df['Type 2'].isna(), 'Type 2'] = df['Type 1']
+print(df[df.isna().any(axis=1)])
 
-for df in pd.read_csv('modified_pokemon_data.csv', chunksize=100):
-    results = df.groupby(['Type 1']).count()
+# Recheck to see if there are any missing values
+missing_values = df.isna().sum()
+print(f'Total missing values in pokemon data is: {missing_values}')
 
-    new_df = pd.concat([new_df, results])
+# Check that replacement of Type 2 nulls with Type 1 was accurate
+print(df.loc[df['Type 2'] == df['Type 1']])
 
-print(new_df.sum())
-
-print(new_df.columns)
-print(new_df.head(20))
-
-final_df = new_df.groupby(new_df.index).sum()
-print(final_df)
