@@ -249,10 +249,10 @@ print(df2[df2.isna()].sum())
 print(df2.describe())
 
 # # Set printing options so we can see the whole table
-# pd.set_option('display.max_rows', None) 
-# pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None) 
+pd.set_option('display.max_columns', None)
 
 # # Print grouped table
-# print(df.groupby(['Type 1', 'Type 2']).count())
+print(df.sort_values(['Type 1', 'Type 2']).groupby(['Type 1', 'Type 2']).count())
 
 
