@@ -7,6 +7,7 @@ https://docs.google.com/document/d/1L2-8iQqpLyjIjdDsHzzdQ9X0GPwHS1SzGXDxk2FA7Eg/
 """
 
 # import pandas as pd
+import numpy as np
 from time import time
 
 ### What is an algorithm: a step by step procedure to solve a computational problem.
@@ -156,7 +157,7 @@ def permutations(input_str):
 
 s = 'hello'
 s = list(s)
-permutations(s)
+# permutations(s)
 # s = list('abc')
 # print(s)
 # print(''.join(s))
@@ -176,5 +177,97 @@ def reverse_string(input_string):
 
 reverse_string('')
 
-###
+### Write a function that finds the largest element in an array
+# a = np.array([[-47,5,7,3,10], [5,48,2,192,4]])
+a = np.array([[[-47,5,7,3,10], [5,48,2,972,4]], [[-47,5,7,3,10], [5,48,2,192,4]]])
+
+print(a)
+# print(a[0,0])
+# print(a.ndim)
+print(a.max()) # built in function that finds max integer
+input_array = a
+print(a.shape)
+print(len(a.shape))
+# print(len(input_array[0]))
+# print(type(input_array[0]))
+
+# Function to find largest element in an array
+# for i in range(0, len(input_array.shape)):
+#     print(f'testing {i}')
+#     array_dim = input_array.shape[i] # iterate over dimensions of array
+#     print(f'array dimension {array_dim}')
+#     for j in range(0, array_dim): # iterate over elements of each dimension
+#         print(input_array[i,j])
+#         print(f'testing {i},{j}')
+
+
+# print(a[1,1])
+
+# for i in range(0,len(input_array.shape)): # iterate over the number of dimensions in our array
+#     # while i > 0:
+#         print(f'this is i: {i}')
+#         for j in range(0,len(input_array.shape)):
+#             print(input_array[i,j])
+
+# for i in range(0,a.shape[0]):
+#     print(i)
+#     for j in range(0,a.shape[1]):
+#         print(f'Positions {i} and {j}')
+#         # print(a[i,j])
+# print(f'testing 123 {input_array[1,1,0]}')
+
+
+# for i in range(0,len(input_array.shape)):
+#     print(i)
+#     lst = list(input_array.shape)
+#     for j in range(0, len(lst)):
+#         print(f' this is my list {lst}')
+#         print(f'this is the {j} element of my list {lst[j]}')
+    # print(f'this is my array shape {lst}')
+    # print(f'this is my list of elements for the array shape {lst[i]}')
+    # print(f'this is the array element {input_array[i,i+1,i+2]}')
+
+
+### ChatGPT solution
+def find_largest_element(arr):
+    # Check if the input array is empty
+    if arr.size == 0:
+        return None  # Return None for an empty array
+
+    # If the input is a scalar (single element), return it
+    if arr.ndim == 0:
+        return arr.item()
+
+    # Initialize the maximum value to negative infinity
+    max_value = float('-inf')
+
+    # Iterate through the elements in the NumPy array
+    for element in np.nditer(arr):
+        # If the element is greater than the current maximum, update max_value
+        if element > max_value:
+            max_value = element
+
+    return max_value
+
+# Example usage:
+arr = np.array([[-47,5,7,3,10], [5,48,2,192,4]])
+largest_element = find_largest_element(arr)
+print("The largest element in the array is:", largest_element)
+a = np.array([[[-47,5,7,3,10], [5,48,2,972,4]], [[-47,5,3837,3,10], [5,48,2,192,4]]])
+largest_element = find_largest_element(a)
+print("The largest element in the array is:", largest_element)
+
+### Data structures review 
+# Create a tree class and build a tree with a single node
+
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+# Creating a binary tree
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
 
