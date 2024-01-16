@@ -221,7 +221,7 @@ print(df[df.isna().any(axis=1)])
 # df['Type 2'].isna() == df['Type 1']
 # print(df[df.isna().any(axis=1)])
 
-# Replae the null values with Type 1 for that pokemon
+# e the null values with Type 1 for that pokemon
 df.loc[df['Type 2'].isna(), 'Type 2'] = df['Type 1']
 print(df[df.isna().any(axis=1)])
 
@@ -252,7 +252,7 @@ print(df2.describe())
 pd.set_option('display.max_rows', None) 
 pd.set_option('display.max_columns', None)
 
-# # Print grouped table
+# # Print grouped table sorted by Type 1 and Type 2
 print(df.sort_values(['Type 1', 'Type 2']).groupby(['Type 1', 'Type 2']).count())
 
 
