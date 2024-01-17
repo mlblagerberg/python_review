@@ -64,6 +64,13 @@ print(df.isna().sum())
 df.loc[df['total_category'].isna(), 'total_category_name'] = 'Unknown'
 print(df.head())
 
-# Second part of the problem was to find the average runtime (here we will do speed) 
-# for each total_category mimited to one value of another column
+# Second part of the problem was to find the average runtime (here we will do average speed) 
+# for each total_category limited to one value of another column (we will use 'Grass' from 'Type 1')
+# print(df.groupby(['total_category_name']).mean())
+condition = (df['Type 1'] == 'Grass')
+
+print(condition.isna().sum())
+# print(condition.head())
+result = df[condition].groupby('total_category_name')['Speed'].mean()
+print(result)
 
