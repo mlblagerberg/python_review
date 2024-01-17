@@ -221,7 +221,7 @@ print(df[df.isna().any(axis=1)])
 # df['Type 2'].isna() == df['Type 1']
 # print(df[df.isna().any(axis=1)])
 
-# e the null values with Type 1 for that pokemon
+# Replace the null values with Type 1 for that pokemon
 df.loc[df['Type 2'].isna(), 'Type 2'] = df['Type 1']
 print(df[df.isna().any(axis=1)])
 
